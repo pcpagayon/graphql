@@ -1,0 +1,49 @@
+type Query {
+    books: [Book] @auth(scope: "some:scope")
+    book(id: ID!): Book
+}
+
+type Mutation {
+    createBook(book: CreateBookInput) : CreateBookPayload
+    updateBook(id: ID!, book:CreateBookInput) : UpdateBookSuccess
+    deleteBook(id: ID!) : DeleteBookSuccess
+}
+
+input CreateBookInput {
+    title: String!,
+    author: String!
+}
+
+input DefaultResponse {
+    id: String!
+}
+
+type CreateBookSuccess {
+    id: String!
+}
+
+
+type UpdateBookSuccess {
+    id: String!
+}
+
+
+type DeleteBookSuccess {
+    id: String!
+}
+
+
+type CreateBookError {
+    message: String!
+}
+
+union CreateBookPayload = CreateBookSuccess | CreateBookError
+
+type Book {
+    id: String,
+    created_at: String,
+    update_at: String,
+    deleted: Boolean,
+    title: String,
+    author: String
+}
